@@ -1,4 +1,4 @@
-$(document).ready( function() {
+$(document).ready(function() {
 	$('.unanswered-getter').submit( function(event){
 		// zero out results if previous search has run
 		$('.results').html('');
@@ -88,5 +88,51 @@ var getUnanswered = function(tags) {
 	});
 };
 
+$(document).ready(function() {
+	$('.inspiration-getter').submit(function(event){
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the top answerers for the tag the user enters
+		var tag = $(this).find("input[name='answerers']").val();
+		getTopAnswerer(tag);
+	});
+})
+
+// this function takes the () object returned by StackOverflow 
+// and creates new result to be appended to DOM
+var showAnswerer = function( ) {
+	
+	// clone our result template code
+	var result = $('.templates .answerer').clone();
+	
+	// Set the answer properties in result
+	var answererElem = result.find('.answerer-text a');
+	answererElem.attr('href', question.link);
+	answererElem.text(question.title);
+
+	// Set the answerer property
+	var answererName = result.find('.answerer');
+	answererName.text("#" + count + answerer.user.display_name);
+
+	// set the date asked property in result
+	var asked = result.find('.asked-date');
+	var date = new Date(1000*question.creation_date);
+	asked.text(date.toString());
+
+	// set the #views for question property in result
+	var views = result.find('.views');
+	views.text(answerers.view_count);
+
+	// set some properties related to asker
+	var asker = result.find('.asker');
+	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
+													question.owner.display_name +
+												'</a>' +
+							'</p>' +
+ 							'<p>Reputation: ' + question.owner.reputation + '</p>'
+	);
+
+	return result;
+};
 
 
