@@ -104,14 +104,16 @@ var getTopAnswer = function(tags) {
 		type: "GET",
 		})
 	.done(function(result){
-		/*var searchResults = showSearchResults(request.tagged, result.items.length);
+		var searchResults = showSearchResults(tags, result.items.length);
 
 		$('.search-results').html(searchResults);
 
 		$.each(result.items, function(i, item) {
-			var question = showQuestion(item);
-			$('.results').append(question);
-		});*/
+			var answerer = showTopAnswerer(item);
+			$('.results').append(answerer);
+		});
+
+
 	console.log(result);
 	})
 	.fail(function(jqXHR, error, errorThrown){
@@ -122,28 +124,13 @@ var getTopAnswer = function(tags) {
 
 // this function takes the question object returned by StackOverflow 
 // and creates new result to be appended to DOM
-var showTopAnswerer = function() {
-	
+var showTopAnswerer = function(answerer) {
+
 	// clone our result template code
 	var result = $('.result .answerer').clone();
-	
-	// Set the answerer properties in result
-	var answererElem = result.find('.answerer-text a');
-	answererElem.attr('href', answerer.link);
-	answererElem.text(answerer.title);
+	var answererDispayName = result.find('.answerer');
 
-	/* set the date asked property in result
-	var asked = result.find('.asked-date');
-	var date = new Date(1000*question.creation_date);
-	asked.text(date.toString());*/
-
-	// set the #views for question property in result
-	var posts = result.find('.posts');
-	viewed.text(answerer.post_count);
-
-	// set the reputation properties
-	var score = result.find('.score');
-	score.html('/2.2/users/{id}/tags/{tags}/top-answers?order=desc&sort=activity&site=stackoverflow');
+	answererDispayName.text(answerer.user.display_name);
 
 	return result;
 };
