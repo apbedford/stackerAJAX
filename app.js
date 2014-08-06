@@ -122,15 +122,15 @@ var getTopAnswer = function(tags) {
 
 // this function takes the question object returned by StackOverflow 
 // and creates new result to be appended to DOM
-var showTopAnswerer = function(question) {
+var showTopAnswerer = function() {
 	
 	// clone our result template code
 	var result = $('.result .answerer').clone();
 	
 	// Set the answerer properties in result
 	var answererElem = result.find('.answerer-text a');
-	answererElem.attr('href', question.link);
-	answererElem.text(question.title);
+	answererElem.attr('href', answerer.link);
+	answererElem.text(answerer.title);
 
 	/* set the date asked property in result
 	var asked = result.find('.asked-date');
@@ -141,16 +141,10 @@ var showTopAnswerer = function(question) {
 	var posts = result.find('.posts');
 	viewed.text(answerer.post_count);
 
-	// set some properties related to asker
+	// set the reputation properties
 	var score = result.find('.score');
-	score.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
-													question.owner.display_name +
-												'</a>' +
-							'</p>' +
- 							'<p>Reputation: ' + question.owner.reputation + '</p>'
-	);
+	score.html('/2.2/users/{id}/tags/{tags}/top-answers?order=desc&sort=activity&site=stackoverflow');
 
 	return result;
 };
-
 
