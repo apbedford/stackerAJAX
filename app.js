@@ -94,15 +94,17 @@ var getUnanswered = function(tags) {
 		$('.search-results').append(errorElem);
 	});
 };
+
 var getTopAnswer = function(tags) {
 	
 	// the parameters we need to pass in our request to StackOverflow's API
-	
 	var result = $.ajax({
 		url: "http://api.stackexchange.com/2.2/tags/"+tags+"/top-answerers/all_time?site=stackoverflow",
 		dataType: "jsonp",
 		type: "GET",
 		})
+
+	//The callback
 	.done(function(result){
 		var searchResults = showSearchResults(tags, result.items.length);
 
@@ -128,10 +130,21 @@ var showTopAnswerer = function(answerer) {
 
 	// clone our result template code
 	var result = $('.result .answerer').clone();
-	var answererDispayName = result.find('.answerer');
 
-	answererDispayName.text(answerer.user.display_name);
+	//set the answererDisplayName property in result
+	var answererDisplayName = result.find('.answerer-text a');
+	answererDisplayName.attr('href', answerer.user.link);
+	answererDisplayName.text(answerer.user.title);
+
+	// set the # of post in result
+	var postCount = result.find('.post');
+	postCount.text(answerer.user.post_count);
+
+	// set some properties related to reputation
+	var reputation = result.find('.score');
+	reputation.text(answerer.user.score);
+
+	console.log(result);
 
 	return result;
 };
-
