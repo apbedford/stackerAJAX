@@ -129,12 +129,12 @@ var getTopAnswer = function(tags) {
 var showTopAnswerer = function(answerer) {
 
 	// clone our result template code
-	var result = $('.result .answerer').clone();
+	var result = $('.templates .answerer').clone();
 
 	//set the answererDisplayName property in result
 	var answererDisplayName = result.find('.answerer-text a');
 	answererDisplayName.attr('href', answerer.user.link);
-	answererDisplayName.text(answerer.user.title);
+	answererDisplayName.text(answerer.user.display_name);
 
 	// set the # of post in result
 	var postCount = result.find('.post');
@@ -142,9 +142,10 @@ var showTopAnswerer = function(answerer) {
 
 	// set some properties related to reputation
 	var reputation = result.find('.score');
-	reputation.text(answerer.user.score);
+	reputation.text(answerer.user.reputation);
 
 	console.log(result);
+
 
 	return result;
 };
