@@ -116,7 +116,7 @@ var getTopAnswer = function(tags) {
 		});
 
 
-	console.log(result);
+	//console.log(result);
 	})
 	.fail(function(jqXHR, error, errorThrown){
 		var errorElem = showError(error);
@@ -138,7 +138,7 @@ var showTopAnswerer = function(answerer) {
 
 	// set the # of post in result
 	var postCount = result.find('.post');
-	postCount.text(answerer.user.post_count);
+	postCount.text(answerer.post_count);
 
 	// set some properties related to reputation
 	var reputation = result.find('.score');
